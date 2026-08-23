@@ -151,9 +151,7 @@ export default function Login() {
             <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Demo credentials</p>
             <div className="space-y-1.5 text-xs text-slate-600">
               {[
-                { role: 'Admin', email: 'admin@copilot.dev', pass: 'Admin123!' },
                 { role: 'Engineer', email: 'engineer@copilot.dev', pass: 'Engineer123!' },
-                { role: 'Manager', email: 'manager@copilot.dev', pass: 'Manager123!' },
                 { role: 'Viewer', email: 'viewer@copilot.dev', pass: 'Viewer123!' },
               ].map(({ role, email, pass }) => (
                 <button
