@@ -1,0 +1,96 @@
+2026-08-20 02:11:00.012 UTC [INFO ] [BILL_BATCH_JOB_001] ============================================================
+2026-08-20 02:11:00.014 UTC [INFO ] [BILL_BATCH_JOB_001] Enterprise Billing Batch Processor v4.7.2
+2026-08-20 02:11:00.015 UTC [INFO ] [BILL_BATCH_JOB_001] Job ID       : BILL_BATCH_JOB_001
+2026-08-20 02:11:00.015 UTC [INFO ] [BILL_BATCH_JOB_001] Run Date     : 2026-08-20
+2026-08-20 02:11:00.016 UTC [INFO ] [BILL_BATCH_JOB_001] Billing Cycle: AUG-2026 (Monthly)
+2026-08-20 02:11:00.016 UTC [INFO ] [BILL_BATCH_JOB_001] Environment  : PRODUCTION
+2026-08-20 02:11:00.017 UTC [INFO ] [BILL_BATCH_JOB_001] DB Instance  : BILPRD01 (Oracle 19c)
+2026-08-20 02:11:00.017 UTC [INFO ] [BILL_BATCH_JOB_001] ============================================================
+2026-08-20 02:11:00.231 UTC [INFO ] [BILL_BATCH_JOB_001] Acquiring batch execution lock on BATCH_CONTROL table
+2026-08-20 02:11:00.445 UTC [INFO ] [BILL_BATCH_JOB_001] Lock acquired successfully (lock_id=BLK-20260820-001)
+2026-08-20 02:11:00.612 UTC [INFO ] [BILL_BATCH_JOB_001] Loading billing configuration from BILLING_CONFIG
+2026-08-20 02:11:00.834 UTC [INFO ] [BILL_BATCH_JOB_001] Config loaded: rate_version=2026.08, vat_rate=0.20, late_fee=12.50
+2026-08-20 02:11:01.102 UTC [INFO ] [BILL_BATCH_JOB_001] Validating billing period: 2026-08-01 to 2026-08-20
+2026-08-20 02:11:01.287 UTC [INFO ] [BILL_BATCH_JOB_001] Period validation passed
+2026-08-20 02:11:01.445 UTC [INFO ] [BILL_BATCH_JOB_001] Counting eligible customer accounts...
+2026-08-20 02:11:03.771 UTC [INFO ] [BILL_BATCH_JOB_001] Total eligible accounts: 1,200,000
+2026-08-20 02:11:03.772 UTC [INFO ] [BILL_BATCH_JOB_001] Account breakdown: residential=980,412 sme=195,304 enterprise=24,284
+2026-08-20 02:11:03.990 UTC [INFO ] [BILL_BATCH_JOB_001] Batch size: 5,000 records per commit
+2026-08-20 02:11:04.001 UTC [INFO ] [BILL_BATCH_JOB_001] Parallelism: 4 worker threads
+2026-08-20 02:11:04.125 UTC [INFO ] [BILL_BATCH_JOB_001] ---- Starting Phase 1: Meter Reading Consolidation ----
+2026-08-20 02:11:04.312 UTC [INFO ] [BILL_BATCH_JOB_001] Fetching meter readings from METER_READING_STAGE
+2026-08-20 02:11:06.891 UTC [INFO ] [BILL_BATCH_JOB_001] Meter readings fetched: 3,847,291 rows
+2026-08-20 02:11:07.102 UTC [INFO ] [BILL_BATCH_JOB_001] Running consolidation SQL (this may take several minutes)
+2026-08-20 02:11:07.445 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-1] Processing residential accounts: batch 1-250000
+2026-08-20 02:11:07.447 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-2] Processing residential accounts: batch 250001-500000
+2026-08-20 02:11:07.449 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-3] Processing SME accounts: batch 1-100000
+2026-08-20 02:11:07.451 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-4] Processing enterprise accounts: batch 1-24284
+2026-08-20 02:11:30.112 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-4] Enterprise accounts complete: 24,284 records (22.7s)
+2026-08-20 02:11:47.334 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-3] SME accounts complete: 100,000 records (39.9s)
+2026-08-20 02:12:01.883 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-1] Residential batch 1-250000 committed (114.4s)
+2026-08-20 02:12:04.221 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-2] Residential batch 250001-500000 committed (116.8s)
+2026-08-20 02:12:04.445 UTC [INFO ] [BILL_BATCH_JOB_001] ---- Phase 1 complete. Duration: 60.4s ----
+2026-08-20 02:12:04.561 UTC [INFO ] [BILL_BATCH_JOB_001] ---- Starting Phase 2: Usage Calculation ----
+2026-08-20 02:12:04.780 UTC [INFO ] [BILL_BATCH_JOB_001] Calculating unit consumption and cost for all accounts
+2026-08-20 02:12:05.001 UTC [INFO ] [BILL_BATCH_JOB_001] Applying tiered rate schedule: rate_version=2026.08
+2026-08-20 02:12:05.112 UTC [INFO ] [BILL_BATCH_JOB_001] TEMP tablespace usage: 41% (20.5 GB / 50 GB)
+2026-08-20 02:12:22.334 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-1] Usage calc progress: 100,000 / 250,000 (40%)
+2026-08-20 02:12:22.336 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-2] Usage calc progress: 98,421 / 250,000 (39%)
+2026-08-20 02:12:40.778 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-3] SME usage calculation complete: 195,304 records
+2026-08-20 02:12:41.002 UTC [INFO ] [BILL_BATCH_JOB_001] TEMP tablespace usage: 58% (29.0 GB / 50 GB)
+2026-08-20 02:12:55.443 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-1] Usage calc progress: 200,000 / 250,000 (80%)
+2026-08-20 02:12:55.445 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-2] Usage calc progress: 201,338 / 250,000 (81%)
+2026-08-20 02:13:10.881 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-1] Residential usage calc complete: 250,000 records (185.9s)
+2026-08-20 02:13:11.003 UTC [INFO ] [BILL_BATCH_JOB_001] [WORKER-2] Residential usage calc complete: 250,000 records (186.2s)
+2026-08-20 02:13:11.220 UTC [INFO ] [BILL_BATCH_JOB_001] TEMP tablespace usage: 72% (36.0 GB / 50 GB)
+2026-08-20 02:13:11.445 UTC [INFO ] [BILL_BATCH_JOB_001] ---- Phase 2 complete. Duration: 66.5s ----
+2026-08-20 02:13:11.561 UTC [INFO ] [BILL_BATCH_JOB_001] ---- Starting Phase 3: Invoice Generation ----
+2026-08-20 02:13:11.780 UTC [INFO ] [BILL_BATCH_JOB_001] Generating invoice records for 1,200,000 accounts
+2026-08-20 02:13:11.891 UTC [INFO ] [BILL_BATCH_JOB_001] Invoice number sequence: INV-2026-08-0000001 to INV-2026-08-1200000
+2026-08-20 02:13:12.002 UTC [INFO ] [BILL_BATCH_JOB_001] Applying adjustments, discounts and standing charges
+2026-08-20 02:13:12.445 UTC [INFO ] [BILL_BATCH_JOB_001] TEMP tablespace usage: 76% (38.0 GB / 50 GB)
+2026-08-20 02:13:30.334 UTC [INFO ] [BILL_BATCH_JOB_001] Invoice generation progress: 200,000 / 1,200,000 (16.7%)
+2026-08-20 02:13:30.445 UTC [INFO ] [BILL_BATCH_JOB_001] TEMP tablespace usage: 81% (40.5 GB / 50 GB)
+2026-08-20 02:13:48.221 UTC [INFO ] [BILL_BATCH_JOB_001] Invoice generation progress: 400,000 / 1,200,000 (33.3%)
+2026-08-20 02:13:48.334 UTC [INFO ] [BILL_BATCH_JOB_001] TEMP tablespace usage: 85% (42.5 GB / 50 GB)
+2026-08-20 02:14:06.112 UTC [INFO ] [BILL_BATCH_JOB_001] Invoice generation progress: 600,000 / 1,200,000 (50.0%)
+2026-08-20 02:14:06.223 UTC [INFO ] [BILL_BATCH_JOB_001] TEMP tablespace usage: 89% (44.5 GB / 50 GB)
+2026-08-20 02:14:06.445 UTC [WARN ] [BILL_BATCH_JOB_001] TEMP tablespace usage exceeding 85% threshold — monitor closely
+2026-08-20 02:14:24.778 UTC [INFO ] [BILL_BATCH_JOB_001] Invoice generation progress: 700,000 / 1,200,000 (58.3%)
+2026-08-20 02:14:24.891 UTC [INFO ] [BILL_BATCH_JOB_001] TEMP tablespace usage: 92% (46.0 GB / 50 GB)
+2026-08-20 02:14:42.334 UTC [INFO ] [BILL_BATCH_JOB_001] Invoice generation progress: 800,000 / 1,200,000 (66.7%)
+2026-08-20 02:14:42.445 UTC [INFO ] [BILL_BATCH_JOB_001] TEMP tablespace usage: 96% (48.0 GB / 50 GB)
+2026-08-20 02:14:42.446 UTC [WARN ] [BILL_BATCH_JOB_001] CRITICAL WARNING: TEMP tablespace at 96% — risk of ORA-01652. Notify DBA immediately.
+2026-08-20 02:14:42.447 UTC [WARN ] [BILL_BATCH_JOB_001] Current sort area size: sort_area_size=65536, sort_area_retained_size=0
+2026-08-20 02:14:42.449 UTC [WARN ] [BILL_BATCH_JOB_001] Active temp segments: SELECT USERNAME, SEGTYPE, BLOCKS FROM V$TEMPSEG_USAGE ORDER BY BLOCKS DESC
+2026-08-20 02:14:55.112 UTC [INFO ] [BILL_BATCH_JOB_001] Invoice generation progress: 830,000 / 1,200,000 (69.2%)
+2026-08-20 02:14:55.223 UTC [INFO ] [BILL_BATCH_JOB_001] TEMP tablespace usage: 99% (49.5 GB / 50 GB)
+2026-08-20 02:14:55.224 UTC [WARN ] [BILL_BATCH_JOB_001] CRITICAL WARNING: TEMP tablespace at 99% — imminent failure
+2026-08-20 02:14:55.225 UTC [WARN ] [BILL_BATCH_JOB_001] Attempting to flush sort buffers and compact temp segments
+2026-08-20 02:14:55.891 UTC [WARN ] [BILL_BATCH_JOB_001] Sort buffer flush returned no free space — TEMP exhausted
+2026-08-20 02:14:58.334 UTC [INFO ] [BILL_BATCH_JOB_001] Invoice generation progress: 847,293 / 1,200,000 (70.6%)
+2026-08-20 02:15:03.112 UTC [ERROR] [BILL_BATCH_JOB_001] ORA-01652: unable to extend temp segment by 128 in tablespace TEMP
+2026-08-20 02:15:03.113 UTC [ERROR] [BILL_BATCH_JOB_001]   at: INSERT INTO INVOICE_STAGING (SELECT ... FROM BILLING_CALC_WORK ORDER BY ACCOUNT_ID, INVOICE_DATE)
+2026-08-20 02:15:03.114 UTC [ERROR] [BILL_BATCH_JOB_001]   SQL Error Code : -1652
+2026-08-20 02:15:03.115 UTC [ERROR] [BILL_BATCH_JOB_001]   Oracle Error  : ORA-01652: unable to extend temp segment by 128 in tablespace TEMP
+2026-08-20 02:15:03.116 UTC [ERROR] [BILL_BATCH_JOB_001]   Tablespace    : TEMP
+2026-08-20 02:15:03.117 UTC [ERROR] [BILL_BATCH_JOB_001]   Extent Size   : 128 blocks (1 MB)
+2026-08-20 02:15:03.118 UTC [ERROR] [BILL_BATCH_JOB_001]   Session SID   : 247
+2026-08-20 02:15:03.119 UTC [ERROR] [BILL_BATCH_JOB_001]   Serial#       : 18291
+2026-08-20 02:15:03.334 UTC [ERROR] [BILL_BATCH_JOB_001] Rolling back current transaction (847,293 uncommitted records)
+2026-08-20 02:15:04.891 UTC [ERROR] [BILL_BATCH_JOB_001] Rollback complete
+2026-08-20 02:15:05.001 UTC [ERROR] [BILL_BATCH_JOB_001] Releasing batch execution lock (lock_id=BLK-20260820-001)
+2026-08-20 02:15:05.112 UTC [ERROR] [BILL_BATCH_JOB_001] Writing failure record to BATCH_AUDIT_LOG
+2026-08-20 02:15:05.223 UTC [ERROR] [BILL_BATCH_JOB_001] Sending alert to operations-alerts@company.com
+2026-08-20 02:15:05.334 UTC [ERROR] [BILL_BATCH_JOB_001] Sending PagerDuty alert: P1-BILLING-BATCH-FAILURE
+2026-08-20 02:15:05.445 UTC [FATAL] [BILL_BATCH_JOB_001] ============================================================
+2026-08-20 02:15:05.446 UTC [FATAL] [BILL_BATCH_JOB_001] BATCH JOB FAILED
+2026-08-20 02:15:05.447 UTC [FATAL] [BILL_BATCH_JOB_001] Job ID      : BILL_BATCH_JOB_001
+2026-08-20 02:15:05.447 UTC [FATAL] [BILL_BATCH_JOB_001] Exit Code   : 1652
+2026-08-20 02:15:05.448 UTC [FATAL] [BILL_BATCH_JOB_001] Error       : ORA-01652 TEMP tablespace exhaustion
+2026-08-20 02:15:05.448 UTC [FATAL] [BILL_BATCH_JOB_001] Records OK  : 0 (transaction rolled back)
+2026-08-20 02:15:05.449 UTC [FATAL] [BILL_BATCH_JOB_001] Records Lost: 847,293 (need rerun from Phase 3)
+2026-08-20 02:15:05.449 UTC [FATAL] [BILL_BATCH_JOB_001] Duration    : 245.4 seconds
+2026-08-20 02:15:05.450 UTC [FATAL] [BILL_BATCH_JOB_001] Next Action : DBA to extend TEMP tablespace, then rerun from checkpoint
+2026-08-20 02:15:05.451 UTC [FATAL] [BILL_BATCH_JOB_001] ============================================================
+2026-08-20 02:15:05.554 UTC [INFO ] [BILL_BATCH_JOB_001] Batch process terminated with exit code 1652

@@ -1,0 +1,60 @@
+# ─── Secrets ───────────────────────────────────────────────────────────────────
+.env
+.env.local
+.env.production
+*.key
+*.pem
+
+# ─── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
+*.pyc
+
+# ─── Node / Frontend ───────────────────────────────────────────────────────────
+node_modules/
+frontend/dist/
+frontend/.vite/
+*.tsbuildinfo
+
+# ─── Docker ────────────────────────────────────────────────────────────────────
+.docker/
+
+# ─── IDE ───────────────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ─── Alembic ───────────────────────────────────────────────────────────────────
+# Keep versions/ tracked; ignore local override
+alembic/versions/__pycache__/
+
+# ─── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+logs/
+# Keep synthetic demo logs (required for the demo flow)
+!backend/data/logs/
+!backend/data/logs/*.log
+
+# ─── SQLite test artifacts ──────────────────────────────────────────────────────
+*.db
+*.sqlite3
+
+# ─── Generated docs / scripts (not part of the application) ────────────────────
+generate_pdf.py
+Enterprise_AI_Support_Copilot.pdf
