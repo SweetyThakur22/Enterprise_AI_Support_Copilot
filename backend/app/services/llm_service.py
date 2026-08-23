@@ -180,27 +180,58 @@ def _get_client() -> anthropic.Anthropic:
     return anthropic.Anthropic(api_key=settings.ANTHROPIC_API_KEY)
 
 
+def _call_anthropic(system: str, user: str) -> tuple[str, int, int]:
+    """Call Claude via the Anthropic SDK. Returns (raw_text, total_tokens, latency_ms)."""
+    client = _get_client()
+    t0 = time.monotonic()
+    response = client.messages.create(
+        model=settings.LLM_MODEL or "claude-sonnet-4-6",
+        max_tokens=2048,
+        system=system,
+        messages=[{"role": "user", "content": user}],
+    )
+    latency_ms = int((time.monotonic() - t0) * 1000)
+    raw_text = response.content[0].text.strip()
+    total_tokens = response.usage.input_tokens + response.usage.output_tokens
+    return raw_text, total_tokens, latency_ms
+
+
+def _call_openai_compatible(system: str, user: str) -> tuple[str, int, int]:
+    """Call any OpenAI-compatible chat API (e.g. Groq, Gemini). Returns (raw_text, total_tokens, latency_ms)."""
+    from openai import OpenAI
+
+    client = OpenAI(api_key=settings.LLM_API_KEY, base_url=settings.LLM_BASE_URL)
+    t0 = time.monotonic()
+    response = client.chat.completions.create(
+        model=settings.LLM_MODEL,
+        max_tokens=2048,
+        temperature=0.2,
+        response_format={"type": "json_object"},
+        messages=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ],
+    )
+    latency_ms = int((time.monotonic() - t0) * 1000)
+    raw_text = (response.choices[0].message.content or "").strip()
+    usage = response.usage
+    total_tokens = (usage.prompt_tokens + usage.completion_tokens) if usage else 0
+    return raw_text, total_tokens, latency_ms
+
+
 def analyze(
     incident: dict[str, Any],
     parsed_log: ParsedLog,
     kb_chunks: list[RetrievedChunk],
     historical: list[HistoricalMatch],
 ) -> tuple[LLMAnalysisResult, int, int]:
-    """Call Claude and return (validated_result, total_tokens, latency_ms)."""
+    """Call the configured LLM provider and return (validated_result, total_tokens, latency_ms)."""
     system, user = _build_prompt(incident, parsed_log, kb_chunks, historical)
-    client = _get_client()
 
-    t0 = time.monotonic()
-    response = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=2048,
-        system=system,
-        messages=[{"role": "user", "content": user}],
-    )
-    latency_ms = int((time.monotonic() - t0) * 1000)
-
-    raw_text = response.content[0].text.strip()
-    total_tokens = response.usage.input_tokens + response.usage.output_tokens
+    if settings.LLM_PROVIDER == "anthropic":
+        raw_text, total_tokens, latency_ms = _call_anthropic(system, user)
+    else:
+        raw_text, total_tokens, latency_ms = _call_openai_compatible(system, user)
 
     # Strip markdown code fences if present
     if raw_text.startswith('```'):

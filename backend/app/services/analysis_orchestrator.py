@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 
 from sqlalchemy.orm import Session
 
+from app.core.config import settings
 from app.models.analysis_result import AnalysisResult, AnalysisStatus, RiskLevel
 from app.models.incident import Incident
 from app.models.log_file import LogFile
@@ -129,7 +130,7 @@ def run_analysis(
         result_row.recommendations = recommendations_payload
         result_row.risk_level = risk_level
         result_row.requires_approval = llm_result.requires_approval
-        result_row.llm_model = "claude-sonnet-4-6"
+        result_row.llm_model = settings.LLM_MODEL
         result_row.token_usage = tokens
         result_row.latency_ms = latency_ms
         db.commit()
