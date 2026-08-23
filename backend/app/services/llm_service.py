@@ -247,8 +247,42 @@ def analyze(
         if ev.get('chunk_id') in valid_chunk_ids
     ] if valid_chunk_ids else data.get('evidence', [])
 
+    _normalize_llm_output(data)
+
     result = LLMAnalysisResult.model_validate(data)
     return result, total_tokens, latency_ms
+
+
+_RISK_ORDER = {'LOW': 0, 'MEDIUM': 1, 'HIGH': 2, 'CRITICAL': 3}
+
+
+def _normalize_llm_output(data: dict[str, Any]) -> None:
+    """Fill in top-level fields some models omit, deriving them from the response where possible.
+
+    Free/open models are less strict about schema adherence than Claude; this keeps the
+    pipeline robust without fabricating analysis content.
+    """
+    recs = data.get('recommendations') or []
+
+    # risk_level: derive from the highest-risk recommendation, else MEDIUM
+    if not data.get('risk_level'):
+        levels = [str(r.get('risk_level', '')).upper() for r in recs if r.get('risk_level')]
+        data['risk_level'] = max(levels, key=lambda x: _RISK_ORDER.get(x, 1)) if levels else 'MEDIUM'
+
+    # requires_approval: true if any recommendation needs approval or overall risk is high
+    if data.get('requires_approval') is None:
+        any_rec_approval = any(bool(r.get('requires_approval')) for r in recs)
+        high_risk = _RISK_ORDER.get(str(data.get('risk_level', 'MEDIUM')).upper(), 1) >= 2
+        data['requires_approval'] = any_rec_approval or high_risk
+
+    # escalation: default to not required unless the model flagged it or confidence is low
+    if data.get('escalation_required') is None:
+        conf = data.get('confidence')
+        data['escalation_required'] = bool(isinstance(conf, int) and conf < 50)
+    data.setdefault('escalation_reason', None)
+    data.setdefault('facts', [])
+    data.setdefault('assumptions', [])
+    data.setdefault('timeline', [])
 
 
 def analyze_safe(
