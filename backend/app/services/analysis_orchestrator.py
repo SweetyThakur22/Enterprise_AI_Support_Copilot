@@ -108,6 +108,7 @@ def run_analysis(
             ],
             "facts": llm_result.facts,
             "assumptions": llm_result.assumptions,
+            "contradicting_evidence": llm_result.contradicting_evidence,
             "escalation_required": llm_result.escalation_required,
             "escalation_reason": llm_result.escalation_reason,
         }

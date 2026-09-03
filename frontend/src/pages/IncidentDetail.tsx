@@ -140,6 +140,7 @@ function ResultsPanel({ analysis, incidentId }: { analysis: NonNullable<ReturnTy
   const timeline = evidence?.timeline ?? []
   const facts = evidence?.facts ?? []
   const assumptions = evidence?.assumptions ?? []
+  const contradicting = evidence?.contradicting_evidence ?? []
 
   return (
     <div className="space-y-4">
@@ -201,6 +202,27 @@ function ResultsPanel({ analysis, incidentId }: { analysis: NonNullable<ReturnTy
               </ul>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Contradicting evidence — honest AI transparency */}
+      {contradicting.length > 0 && (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+          <div className="mb-2 flex items-center gap-2">
+            <svg className="h-4 w-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-red-700">Contradicting Evidence</h3>
+            <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs text-red-600">transparency</span>
+          </div>
+          <p className="mb-2 text-xs text-red-600">These observations do not fully fit the root cause — shown so nothing is hidden.</p>
+          <ul className="space-y-1">
+            {contradicting.map((c, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm text-red-800">
+                <span className="mt-0.5 shrink-0 text-red-400">✗</span>{c}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 

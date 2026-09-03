@@ -80,6 +80,7 @@ export interface AnalysisEvidence {
   timeline?: TimelineEvent[]
   facts?: string[]
   assumptions?: string[]
+  contradicting_evidence?: string[]
   escalation_required?: boolean
   escalation_reason?: string | null
 }

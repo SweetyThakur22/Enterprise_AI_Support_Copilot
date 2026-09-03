@@ -119,6 +119,21 @@ def get_dashboard_stats(db: Session) -> dict:
         db.scalars(select(Incident).order_by(Incident.created_at.desc()).limit(5)).all()
     )
 
+    avg_latency_row = db.scalar(
+        select(func.avg(AnalysisResult.latency_ms)).where(
+            AnalysisResult.status == AnalysisStatus.COMPLETED,
+            AnalysisResult.latency_ms.isnot(None),
+        )
+    )
+    avg_latency_ms = round(float(avg_latency_row)) if avg_latency_row else None
+
+    resolved_this_week = db.scalar(
+        select(func.count(Incident.id)).where(
+            Incident.status == IncidentStatus.RESOLVED,
+            Incident.updated_at >= week_ago,
+        )
+    ) or 0
+
     return {
         "incidents_this_week": incidents_this_week,
         "open_incidents": open_incidents,
@@ -126,6 +141,8 @@ def get_dashboard_stats(db: Session) -> dict:
         "ai_analyzed_count": ai_analyzed,
         "pending_approvals": pending_approvals,
         "avg_confidence": avg_confidence,
+        "avg_latency_ms": avg_latency_ms,
+        "resolved_this_week": resolved_this_week,
         "incidents_by_application": incidents_by_application,
         "incidents_by_severity": incidents_by_severity,
         "incidents_last_7_days": incidents_last_7_days,

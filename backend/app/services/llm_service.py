@@ -42,6 +42,7 @@ class LLMAnalysisResult(BaseModel):
     confidence: int = Field(ge=0, le=100)
     facts: list[str]
     assumptions: list[str]
+    contradicting_evidence: list[str] = []
     evidence: list[EvidenceItemSchema]
     timeline: list[TimelineEventSchema]
     recommendations: list[RecommendationSchema]
@@ -152,8 +153,9 @@ Return ONLY this JSON structure (no markdown, no explanations):
   "classification": "<incident category string>",
   "root_cause": "<detailed root cause explanation>",
   "confidence": <integer 0-100>,
-  "facts": ["<directly evidenced facts>"],
+  "facts": ["<directly evidenced facts — only what logs/docs confirm>"],
   "assumptions": ["<inferred, not directly evidenced>"],
+  "contradicting_evidence": ["<any observations that do NOT fit the root cause — be honest, omit none>"],
   "evidence": [
     {{"source": "<document title>", "chunk_id": <int>, "text": "<excerpt>", "score": <float>}}
   ],
@@ -282,6 +284,7 @@ def _normalize_llm_output(data: dict[str, Any]) -> None:
     data.setdefault('escalation_reason', None)
     data.setdefault('facts', [])
     data.setdefault('assumptions', [])
+    data.setdefault('contradicting_evidence', [])
     data.setdefault('timeline', [])
 
 
