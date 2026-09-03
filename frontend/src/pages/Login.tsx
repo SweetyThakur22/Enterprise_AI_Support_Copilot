@@ -307,8 +307,29 @@ export default function Login() {
             </button>
           </form>
 
+          {/* Demo credentials */}
+          <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Demo credentials</p>
+            <div className="space-y-1.5">
+              {[
+                { role: 'Engineer', email: 'engineer@copilot.dev', pass: 'Engineer123!' },
+                { role: 'Viewer',   email: 'viewer@copilot.dev',   pass: 'Viewer123!'   },
+              ].map(({ role, email, pass }) => (
+                <button
+                  key={role}
+                  type="button"
+                  onClick={() => { setEmail(email); setPassword(pass) }}
+                  className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-xs transition-colors hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+                >
+                  <span className="font-semibold text-slate-700">{role}</span>
+                  <span className="text-slate-500">{email}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* FAQ accordion */}
-          <div className="mt-10">
+          <div className="mt-8">
             <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
               Frequently asked questions
             </p>
