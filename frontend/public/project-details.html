@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enterprise AI Support Copilot — Project Overview</title>
+  <style>
+    :root {
+      --ink: #0f172a;
+      --muted: #475569;
+      --light: #94a3b8;
+      --rule: #e2e8f0;
+      --accent: #4f46e5;
+      --accent-light: #eef2ff;
+      --green: #059669;
+      --page: #ffffff;
+      --radius: 8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: #f8fafc;
+      padding: 40px 20px 80px;
+    }
+
+    /* ─── Page wrapper ─────────────────────────────────────────── */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      background: var(--page);
+      border-radius: 12px;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    /* ─── Header ───────────────────────────────────────────────── */
+    .header {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
+      padding: 48px 56px 40px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 50%, rgba(99,102,241,0.25) 0%, transparent 60%);
+    }
+    .header-inner { position: relative; z-index: 1; }
+    .logo-row { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+    .logo-icon {
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      backdrop-filter: blur(8px);
+    }
+    .logo-text { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+    .logo-sub { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+    .header h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .header p { color: rgba(255,255,255,0.75); font-size: 15px; max-width: 540px; line-height: 1.5; }
+    .header-badges { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px; font-weight: 600;
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.85);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    /* ─── Print button ─────────────────────────────────────────── */
+    .print-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 56px;
+      background: var(--accent-light);
+      border-bottom: 1px solid #c7d2fe;
+    }
+    .print-bar span { font-size: 12px; color: var(--accent); font-weight: 500; }
+    .print-btn {
+      padding: 6px 14px;
+      background: var(--accent);
+      color: #fff;
+      border: none; border-radius: 6px;
+      font-size: 12px; font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .print-btn:hover { opacity: 0.88; }
+
+    /* ─── Body ─────────────────────────────────────────────────── */
+    .body { padding: 48px 56px; }
+
+    section { margin-bottom: 40px; }
+    section:last-child { margin-bottom: 0; }
+
+    .section-label {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, #c7d2fe, transparent);
+    }
+
+    h2 { font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+    p { color: var(--muted); line-height: 1.7; }
+
+    /* ─── Problem block ──────────────────────────────────────────── */
+    .problem-block {
+      background: #fef3c7;
+      border: 1px solid #fcd34d;
+      border-left: 4px solid #f59e0b;
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-top: 12px;
+    }
+    .problem-block p { color: #78350f; }
+
+    /* ─── Features grid ─────────────────────────────────────────── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .feature-card {
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+    .feature-card .f-title {
+      font-size: 13px; font-weight: 600; color: var(--ink);
+      margin-bottom: 4px; display: flex; align-items: center; gap: 6px;
+    }
+    .feature-card .f-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0;
+    }
+    .feature-card p { font-size: 12px; color: var(--light); }
+
+    /* ─── Tech stack table ──────────────────────────────────────── */
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+    th {
+      text-align: left; font-size: 11px; font-weight: 600;
+      color: var(--light); text-transform: uppercase; letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--rule); padding: 8px 12px;
+    }
+    td {
+      font-size: 13px; color: var(--muted);
+      padding: 9px 12px; border-bottom: 1px solid #f1f5f9;
+    }
+    td:first-child { font-weight: 600; color: var(--ink); width: 160px; }
+    tr:last-child td { border-bottom: none; }
+
+    /* ─── Architecture diagram ──────────────────────────────────── */
+    .arch-flow {
+      display: flex; align-items: center; flex-wrap: wrap;
+      gap: 0; margin-top: 16px;
+    }
+    .arch-node {
+      padding: 10px 16px;
+      background: var(--accent-light);
+      border: 1px solid #c7d2fe;
+      border-radius: 8px;
+      font-size: 12px; font-weight: 600; color: var(--accent);
+      white-space: nowrap;
+    }
+    .arch-arrow {
+      padding: 0 8px; color: var(--light); font-size: 16px;
+    }
+    .arch-section { margin-top: 16px; }
+    .arch-section-title {
+      font-size: 12px; font-weight: 600; color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .arch-items {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .arch-item {
+      padding: 6px 12px;
+      background: #f8fafc; border: 1px solid var(--rule);
+      border-radius: 6px; font-size: 12px; color: var(--muted);
+    }
+
+    /* ─── AI pipeline ────────────────────────────────────────────── */
+    .pipeline {
+      display: flex; flex-direction: column; gap: 6px;
+      margin-top: 14px;
+    }
+    .pipeline-step {
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .step-num {
+      width: 24px; height: 24px; flex-shrink: 0;
+      background: var(--accent); color: #fff;
+      border-radius: 50%; font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-content { padding-top: 2px; }
+    .step-title { font-size: 13px; font-weight: 600; color: var(--ink); }
+    .step-desc { font-size: 12px; color: var(--light); margin-top: 1px; }
+
+    /* ─── Footer ──────────────────────────────────────────────────── */
+    .footer {
+      padding: 20px 56px;
+      border-top: 1px solid var(--rule);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer span { font-size: 11px; color: var(--light); }
+    .footer-links { display: flex; gap: 16px; }
+    .footer a { font-size: 11px; color: var(--accent); text-decoration: none; }
+
+    /* ─── Print styles ────────────────────────────────────────────── */
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { box-shadow: none; border-radius: 0; }
+      .print-bar { display: none; }
+      .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .problem-block { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .arch-node { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .step-num { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      a { text-decoration: none; color: inherit; }
+      @page { margin: 0.5in; size: A4; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="header-inner">
+        <div class="logo-row">
+          <div class="logo-icon">🤖</div>
+          <div>
+            <div class="logo-text">AI Support Copilot</div>
+            <div class="logo-sub">Enterprise Incident Intelligence Platform</div>
+          </div>
+        </div>
+        <h1>Project Overview</h1>
+        <p>An AI-powered production-support platform that helps engineers investigate application incidents using large language models, retrieval-augmented generation, and structured reasoning — with human-in-the-loop approvals and a full audit trail.</p>
+        <div class="header-badges">
+          <span class="badge">Python · FastAPI</span>
+          <span class="badge">React · TypeScript</span>
+          <span class="badge">PostgreSQL · pgvector</span>
+          <span class="badge">Claude / Groq LLM</span>
+          <span class="badge">RAG Pipeline</span>
+          <span class="badge">JWT RBAC</span>
+          <span class="badge">Railway · Vercel</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Print bar -->
+    <div class="print-bar">
+      <span>Open in browser → File → Print → Save as PDF to export this document</span>
+      <button class="print-btn" onclick="window.print()">Save as PDF</button>
+    </div>
+
+    <div class="body">
+
+      <!-- Problem Statement -->
+      <section>
+        <div class="section-label">01 · Problem Statement</div>
+        <h2>Production incidents cost thousands of dollars per minute</h2>
+        <p>When a critical incident fires at 2 AM, engineers face a fragmented workflow: switching between dashboards, digging through thousands of log lines, searching Confluence for relevant runbooks, and making high-stakes remediation decisions under time pressure — all without structured AI assistance.</p>
+        <div class="problem-block">
+          <p><strong>The gap:</strong> Monitoring tells you a service is unhealthy. It doesn't tell you why, what caused it, what the historical precedent is, or whether the proposed fix is safe to execute. Engineers carry all of that in their heads — or waste 30–60 minutes reconstructing it from scratch every incident.</p>
+        </div>
+      </section>
+
+      <!-- What the Product Does -->
+      <section>
+        <div class="section-label">02 · What the Product Does</div>
+        <h2>AI-powered investigation in under 60 seconds</h2>
+        <p>The platform automates the evidence-gathering and root-cause reasoning that engineers do manually. When an incident is selected, the system fetches the associated logs, parses the error timeline, retrieves semantically relevant knowledge-base documentation, identifies similar past incidents, and sends a structured evidence package to a large language model for analysis.</p>
+        <p style="margin-top: 10px;">The LLM returns a validated JSON response: root cause, confidence score (0–100), confirmed facts, inferred assumptions, <strong>contradicting evidence</strong> (transparency feature), a timeline, and risk-scored remediation recommendations. High-risk recommendations require human approval before being executed. Every action is written to an immutable audit log.</p>
+      </section>
+
+      <!-- Key Features -->
+      <section>
+        <div class="section-label">03 · Key Features</div>
+        <h2>Capabilities at a glance</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="f-title"><div class="f-dot"></div>Log Parsing Engine</div>
+            <p>Detects format (Oracle, syslog, JSON, Apache), extracts ORA-XXXXX / HTTP 5xx / timeout codes, builds a timestamped event timeline, and identifies the triggering event.</p>
+          </div>
+          <div class="feature-card">
+            <div class="f-title"><div class="f-dot"></div>RAG Knowledge Retrieval</div>
+            <p>Six enterprise knowledge-base documents embedded with sentence-transformers (all-MiniLM-L6-v2, 384-dim) stored in pgvector. Top-5 semantically similar chunks retrieved per investigation.</p>
+          </div>
+          <div class="feature-card">
+            <div class="f-title"><div class="f-dot"></div>Historical Incident Search</div>
+            <p>Finds similar past resolved incidents by error code match + semantic similarity. Returns top-3 with root cause and resolution hints to inform LLM reasoning.</p>
+          </div>
+          <div class="feature-card">
+            <div class="f-title"><div class="f-dot"></div>LLM Analysis with Pydantic Validation</div>
+            <p>Claude (claude-sonnet-4-6) or Groq (OpenAI-compatible). Structured JSON output validated by Pydantic. Contradicting evidence and confidence bounds enforced. Prompt injection defence built in.</p>
+          </div>
+          <div class="feature-card">
+            <div class="f-title"><div class="f-dot"></div>Approval Workflow</div>
+            <p>HIGH / CRITICAL risk recommendations require Incident Manager approval. Simulated action result recorded. Full approval history and comment trail persisted.</p>
+          </div>
+          <div class="feature-card">
+            <div class="f-title"><div class="f-dot"></div>RBAC + Audit Trail</div>
+            <p>Four roles: Viewer, Support Engineer, Incident Manager, Admin. Every login, analysis trigger, and approval decision is written to an immutable audit log with IP, user, and timestamp.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tech Stack -->
+      <section>
+        <div class="section-label">04 · Tech Stack</div>
+        <h2>Technologies used</h2>
+        <table>
+          <thead>
+            <tr><th>Layer</th><th>Technology</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Frontend</td><td>React 18 + TypeScript + Vite</td><td>TanStack Query for server state</td></tr>
+            <tr><td>UI Components</td><td>shadcn/ui + Tailwind CSS</td><td>Radix primitives, Recharts for data viz</td></tr>
+            <tr><td>Backend</td><td>FastAPI + Python 3.11</td><td>Async endpoints, BackgroundTasks</td></tr>
+            <tr><td>Auth</td><td>JWT + bcrypt + python-jose</td><td>RS256, 30-min access tokens</td></tr>
+            <tr><td>Database</td><td>PostgreSQL 15 + pgvector</td><td>SQLAlchemy 2.0, Alembic migrations</td></tr>
+            <tr><td>Embeddings</td><td>sentence-transformers</td><td>all-MiniLM-L6-v2, 384 dims, runs locally</td></tr>
+            <tr><td>LLM</td><td>Anthropic Claude / Groq</td><td>Pluggable via LLM_PROVIDER env var</td></tr>
+            <tr><td>Rate Limiting</td><td>slowapi</td><td>5 req/min on /auth/login</td></tr>
+            <tr><td>Deployment</td><td>Railway (API) + Vercel (frontend)</td><td>Docker multi-stage, nginx SPA</td></tr>
+            <tr><td>CI/CD</td><td>GitHub Actions</td><td>lint → test → deploy on merge to main</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Architecture -->
+      <section>
+        <div class="section-label">05 · Architecture Summary</div>
+        <h2>How data flows through the system</h2>
+
+        <div class="arch-flow">
+          <div class="arch-node">React SPA</div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node">FastAPI REST</div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node">AI Orchestrator</div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node">PostgreSQL + pgvector</div>
+        </div>
+
+        <div class="arch-section">
+          <div class="arch-section-title">AI Investigation Pipeline (runs as a BackgroundTask)</div>
+          <div class="pipeline">
+            <div class="pipeline-step">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <div class="step-title">Fetch incident + logs</div>
+                <div class="step-desc">Incident metadata and attached log files loaded from PostgreSQL</div>
+              </div>
+            </div>
+            <div class="pipeline-step">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <div class="step-title">Parse logs</div>
+                <div class="step-desc">Regex-based format detection, error code extraction (ORA-XXXXX, HTTP 5xx, timeouts), timeline reconstruction</div>
+              </div>
+            </div>
+            <div class="pipeline-step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <div class="step-title">RAG retrieval</div>
+                <div class="step-desc">Query embedded against pgvector — top-5 KB chunks by cosine similarity returned</div>
+              </div>
+            </div>
+            <div class="pipeline-step">
+              <div class="step-num">4</div>
+              <div class="step-content">
+                <div class="step-title">Historical search</div>
+                <div class="step-desc">Top-3 similar resolved incidents by error code match + application context</div>
+              </div>
+            </div>
+            <div class="pipeline-step">
+              <div class="step-num">5</div>
+              <div class="step-content">
+                <div class="step-title">LLM analysis</div>
+                <div class="step-desc">Evidence package → Claude/Groq → structured JSON → Pydantic validation → contradicting evidence check</div>
+              </div>
+            </div>
+            <div class="pipeline-step">
+              <div class="step-num">6</div>
+              <div class="step-content">
+                <div class="step-title">Store + audit</div>
+                <div class="step-desc">Result persisted to analysis_results (JSONB), audit record created, approval requests raised if needed</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arch-section" style="margin-top: 20px;">
+          <div class="arch-section-title">Key security measures</div>
+          <div class="arch-items">
+            <span class="arch-item">Prompt injection defence</span>
+            <span class="arch-item">XML boundary tagging on log content</span>
+            <span class="arch-item">Evidence chunk-ID validation</span>
+            <span class="arch-item">Secret masking in structlog</span>
+            <span class="arch-item">Rate limiting (slowapi)</span>
+            <span class="arch-item">Global exception handler</span>
+            <span class="arch-item">No stack traces in API responses</span>
+            <span class="arch-item">CORS restricted to known origins</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <span>Enterprise AI Support Copilot · v0.1.0 · Built by Sweety Thakur</span>
+      <div class="footer-links">
+        <a href="https://backend-production-7ae6.up.railway.app/docs" target="_blank">API Docs</a>
+        <a href="https://github.com/SweetyThakur22/Enterprise_AI_Support_Copilot" target="_blank">GitHub</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Auto-focus print when arriving via hash #print
+    if (location.hash === '#print') window.print()
+  </script>
+</body>
+</html>
